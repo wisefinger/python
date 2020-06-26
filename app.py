@@ -28,7 +28,7 @@ def create_bucket(bucket_prefix, s3_connection):
         Bucket=bucket_name,
         CreateBucketConfiguration={
         'LocationConstraint': current_region})
-    print(bucket_name, current_region)
+    print(f'> bucket created    :{bucket_name}, {current_region}')
     return bucket_name, bucket_response
 
 # define function to generate test files
@@ -40,18 +40,18 @@ def create_temp_file(size, file_name, file_content):
     return random_file_name
 
 # Create an actual bucket
-# first_bucket_name, first_response = create_bucket(bucket_prefix='wisefinger',
-#                                                   s3_connection=s3_resource.meta.client)
+first_bucket_name, first_response = create_bucket(bucket_prefix='wisefinger',
+                                                   s3_connection=s3_resource.meta.client)
 # Create a tempfile
-first_file_name = create_temp_file(300, '_testfile.txt', 'f')
+first_file_name = create_temp_file(300, 'firstfile.txt', 'f')
 
+# Define resource classes
+first_bucket = s3_resource.Bucket(name=first_bucket_name)
+first_object = s3_resource.Object(bucket_name=first_bucket_name, key=first_file_name)
 
-
-
-
-
-
-
-
+# Upload using an instance object
+s3_resource.Object(first_bucket_name, first_file_name).upload_file(
+    Filename=first_file_name)
+print(f'> file uploaded     :{first_file_name}')
 
 print("stopping S3 basics .................................................................")
