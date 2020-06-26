@@ -1,4 +1,5 @@
 print("starting S3 basics .................................................................")
+# Based on web https://realpython.com/python-boto3-aws-s3/
 # Import AWS Lib for Python
 import boto3
 import uuid
@@ -50,8 +51,13 @@ first_bucket = s3_resource.Bucket(name=first_bucket_name)
 first_object = s3_resource.Object(bucket_name=first_bucket_name, key=first_file_name)
 
 # Upload using an instance object
-s3_resource.Object(first_bucket_name, first_file_name).upload_file(
-    Filename=first_file_name)
+#s3_resource.Object(first_bucket_name, first_file_name).upload_file(
+#    Filename=first_file_name)
+# Use the first_object instance:
+first_object.upload_file(first_file_name)
+
+
+
 print(f'> file uploaded     :{first_file_name}')
 
 print("stopping S3 basics .................................................................")
